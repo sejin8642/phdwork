@@ -1,45 +1,44 @@
-# Computational NMR project with Deep Learning
+# Introduction
+This git repository is created to store frozen codebase of my PhD research project. All the information on how to use the code is written as comments and docstrings within the python scripts.
 
-This repository contains python scripts to generate NMR data as well as sample deep learning algorithms for my computational NMR projects.
+# Dependencies
+To run the code, you must install Python of version 3.7 or higher, Numpy, Scipy, and TensorFlow. In order to use accelerated Nvidia GPU, please install TensorFlow with cudnn.
 
-## Getting Started
+## ftnmr
+ftnmr module contain classes for creating molecule and spectrometer. There are also other functions and classes to facilitate dynamic programming in my project. The following code snippet shows ftnmr use cases
+```python
+# ftnmr.molecule contains hydrogen groups with the total number and chemical shift of each group.
+# Based on J-coupling constants, spectral splits with their distribution is also created
+hydrogens={'a':(12, 0.0, 120.0), 'b':(6, 0.0, 180.0)}
+couplings = [('a', 'b', 10)]
+molecule = ftnmr.molecule(hydrogens=hydrogens, couplings=couplings) 
 
-If you want to test out my scripts, you need to have python 3.7 or higher installed on your machine. I also use python packages that are pre-installed on anaconda. Thus, I recommend that you install ananconda.
+# create a spectrometer object
+spec = ftnmr.spectrometer() 
 
-### Prerequisites
+# solution dict with the above molecule whose relative abundance is 12
+moles = {'A':(molecule, 12)}
 
-Working PC (linux OS preferred) such as Ubuntu OS PC. For other platforms, please consult other sources.
+# measure and process NMR signal with baseline distortion artifact
+spec.artifact(baseline=True)
+spec.measure(moles=moles)
+spectra, target = spec() # returns the original (with artifact) and target spectra
+```
 
-### Installing Anaconda
+## projnmr
+projnmr module contain a class that can generate random molecule for data simulation.
+```python
+# Your Python code here
+spec = projnmr.metaboliteGenerate() # returns ftnmr.molecule object
+```
 
-Anaconda is not usually installed on Ubuntu machine. To install anaconda, click on this [link](https://docs.anaconda.com/anaconda/install/linux/)
+## sbatch script gend and train_model
+The template scripts for data simulation and training the model. Please change the parameter accordingly to get the type of data you want (all the parameters are commented and have docstrings in the code for anyone to understand). The scripts are written specifically for sbatch command on HPC setup.
+```
+sbatch gend.py
+sbatch train_model.py
+```
 
-## Tensorflow
-
-Once you have anaconda, you need to install Tensorflow on your anaconda environment in order to run the scripts.
-
-## Built With
-
-* [Anaconda](https://www.anaconda.com/) - a distribution of the Python and R programming languages for scientific computing that aims to simplify package management and deployment.
-
-* [TensorFlow](https://www.tensorflow.org/) - a free and open-source software library for machine learning and artificial intelligence 
-
-## Contributing
-
-Please read [CONTRIBUTING.md](.github/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/sejin8642/gitpractice/tags). 
-
-## Authors
-
-* [Devil Man](https://github.com/ackma3141)
-* [Sejin Nam](https://github.com/sejin8642)
-
-See also the list of [contributors](https://github.com/sejin8642/gitpractice/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+## Questions
+If any part of the code does not make any sense, please contact at sejinnam@hawaii.edu for help.
 
