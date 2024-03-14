@@ -28,8 +28,8 @@ spectra, target = spec() # returns the original (with artifact) and target spect
 ## projnmr
 projnmr module contain a class that can generate random molecule for data simulation.
 ```python
-# Your Python code here
-spec = projnmr.metaboliteGenerate() # returns ftnmr.molecule object
+# returns ftnmr.molecule object
+molecule = projnmr.metaboliteGenerate() # 
 ```
 
 ## SLURM scripts: gend and train_model

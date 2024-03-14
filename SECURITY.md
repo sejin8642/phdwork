@@ -1,16 +1,5 @@
 # Security Policy
 
-## Supported Versions
-
-Use this section to tell users about which versions of your project are currently being supported with security updates.
-
-| Version | Supported          |
-| ------- | ------------------ |
-| 1.2.x   | :white_check_mark: |
-| 1.1.x   | :x:                |
-| 1.0.x   | :white_check_mark: |
-| < 1.0   | :x:                |
-
 ## Reporting a Vulnerability
 
 The safety and security of our project are of the utmost importance. If you have discovered a security vulnerability within our project, we kindly request that you report it to us as soon as possible. We appreciate your efforts to responsibly disclose your findings and will make every effort to acknowledge your contributions.
