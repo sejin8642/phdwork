@@ -60,17 +60,10 @@ def main():
     dataset_train = PHB_datasets[0]
     dataset_valid = PHB_datasets[1]
 
-    # config hyperparameters for the model architecture
-    input_length = None
-    GRU_unit = 32
-    first_filter_num = 128
-    second_filter_num = 64
-
-    model_PHB = NN_models.model_NMR(
-        input_length,
-        GRU_unit,
-        first_filter_num,
-        second_filter_num)
+    # load model
+    model_PHB = keras.models.load_model(
+            'model_PHB.mar.31.2024.hdf5', 
+            compile=False)
 
     # early stopping callback fn
     early_stopping = tf.keras.callbacks.EarlyStopping(
@@ -99,8 +92,8 @@ def main():
     model_PHB.compile(
         loss="mse",
         optimizer=keras.optimizers.Nadam(
-            learning_rate=0.00005, 
-            clipnorm=0.2,
+            learning_rate=0.0001, 
+            clipnorm=0.4,
             epsilon=1e-05),
         metrics=['mse'])
 
@@ -109,7 +102,7 @@ def main():
     history = model_PHB.fit(
         dataset_train,
         validation_data=dataset_valid,
-        epochs=128,
+        epochs=64,
         callbacks=callbacks)
 
     # save history content
